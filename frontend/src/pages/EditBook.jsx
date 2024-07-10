@@ -44,7 +44,7 @@ const EditBook = () => {
             .catch((error) => {
                 console.log(error);
                 setLoading(false);
-                alert('Failed to create book');
+                alert('Failed to edit book');
                 console.log(error);
             });
     };
