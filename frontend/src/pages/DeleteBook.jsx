@@ -4,11 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { backendUrl } from "../config";
 import BackButton from "../components/BackButton";
 import Spinner from "../components/Spinner";
+import { useSnackbar } from "notistack";
 
 const DeleteBook = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const {id} = useParams();
+    const { enqueueSnackbar } = useSnackbar();
     
     useEffect(() => {
         setLoading(true);
@@ -20,7 +22,7 @@ const DeleteBook = () => {
             .catch((error) => {
                 console.log(error);
                 setLoading(false);
-                alert('Failed to fetch book details');
+                enqueueSnackbar('An error happened', { variant: 'error'});
             });
     }, [id]);
 
@@ -30,12 +32,13 @@ const DeleteBook = () => {
             .delete(backendUrl + `/books/${id}`)
             .then(() => {
                 setLoading(false);
+                enqueueSnackbar('Book deleted successfully', { variant: 'success' });
                 navigate('/');
             })
             .catch((error) => {
                 console.log(error);
                 setLoading(false);
-                alert('Failed to delete book');
+                enqueueSnackbar('An error happened', { variant: 'error' });
             });
     };
     return (

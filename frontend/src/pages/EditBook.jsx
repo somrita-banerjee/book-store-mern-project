@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { backendUrl } from "../config";
 import Spinner from "../components/Spinner";
 import BackButton from "../components/BackButton";
+import { useSnackbar } from "notistack";
 
 const EditBook = () => {
     const [title, setTitle] = useState('');
@@ -11,7 +12,9 @@ const EditBook = () => {
     const [publishYear, setPublishYear] = useState('');
     const [loading,setLoading] = useState(false);
     const navigate = useNavigate();
-    const {id} = useParams();
+    const {id} = useParams();    
+    const { enqueueSnackbar } = useSnackbar();
+
     useEffect(() => {
         setLoading(true);
         axios.get(backendUrl + '/books/'+id)
@@ -24,7 +27,7 @@ const EditBook = () => {
         .catch((error) => {
             console.log(error);
             setLoading(false);
-            alert('Failed to fetch book details');
+            enqueueSnackbar('An error happened', { variant: 'error' });
         });
     }, [id])
 
@@ -39,12 +42,13 @@ const EditBook = () => {
             .patch(backendUrl + `/books/${id}`, data)
             .then(() => {
                 setLoading(false);
+                enqueueSnackbar('Book details updated successfully', { variant: 'success' });
                 navigate('/');
             })
             .catch((error) => {
                 console.log(error);
                 setLoading(false);
-                alert('Failed to edit book');
+                enqueueSnackbar('An error happened', { variant: 'error' });
                 console.log(error);
             });
     };

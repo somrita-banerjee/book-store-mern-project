@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { backendUrl } from "../config";
 import Spinner from "../components/Spinner";
 import BackButton from "../components/BackButton";
+import { useSnackbar } from "notistack";
 
 const CreateBooks = () => {
     const [title, setTitle] = useState('');
@@ -11,6 +12,7 @@ const CreateBooks = () => {
     const [publishYear, setPublishYear] = useState('');
     const [loading,setLoading] = useState(false);
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleSaveBook = () => {
         const data = {
@@ -22,13 +24,13 @@ const CreateBooks = () => {
             .post(backendUrl + '/books', data)
             .then(() => {
                 setLoading(false);
+                enqueueSnackbar('Book created successfully', { variant: 'success' });
                 navigate('/');
             })
             .catch((error) => {
                 console.log(error);
                 setLoading(false);
-                alert('Failed to create book');
-                console.log(error);
+                enqueueSnackbar('An error happened', { variant: 'error' });
             });
     };
 
