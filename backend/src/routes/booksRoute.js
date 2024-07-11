@@ -5,15 +5,10 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     try {
-        if(
-            !req.body.title ||
-            !req.body.author || 
-            !req.body.publishYear
-        ) {
+        if (!req.body.title || !req.body.author || !req.body.publishYear) {
             return res.status(400).send({
                 message: 'Send all required fields: title, author, publishYear',
             });
-
         }
         const newBook = {
             title: req.body.title,
@@ -25,80 +20,73 @@ router.post('/', async (req, res) => {
         return res.status(201).send(book);
     } catch (error) {
         console.log(error.message);
-        res.status(500).send({ message: error.message});
+        res.status(500).send({ message: error.message });
     }
 });
 
-router.get('/', async(req,res) => {
-    try{
+router.get('/', async (req, res) => {
+    try {
         const books = await Book.find();
         return res.status(200).json({
             count: books.length,
-            data: books
+            data: books,
         });
-    }catch(error){
+    } catch (error) {
         console.log(error.message);
-        res.status(500).send({message: error.message});
+        res.status(500).send({ message: error.message });
     }
 });
 
-router.get('/:id', async(req,res) => {
-    try{
-
+router.get('/:id', async (req, res) => {
+    try {
         const { id } = req.params;
 
         const book = await Book.findById(id);
 
         return res.status(200).json(book);
-    }catch(error){
+    } catch (error) {
         console.log(error.message);
-        res.status(500).send({message: error.message});
+        res.status(500).send({ message: error.message });
     }
 });
 
-router.patch('/:id', async (req,res) => {
-    try{
-        if(
-
-            !req.body.title &&
-            !req.body.author &&
-            !req.body.publishYear
-        ) { 
+router.patch('/:id', async (req, res) => {
+    try {
+        if (!req.body.title && !req.body.author && !req.body.publishYear) {
             return res.status(400).send({
                 message: 'Send all required fields: title, author, publishYear',
             });
         }
 
-        const{ id } = req.params;
+        const { id } = req.params;
 
         const result = await Book.findByIdAndUpdate(id, req.body).exec();
 
-        if(!result) {
-            return res.status(404).send({message: 'Book not found'});
+        if (!result) {
+            return res.status(404).send({ message: 'Book not found' });
         }
 
-        return res.status(200).send({message: 'Book updated successfully'});
-    } catch(error){
+        return res.status(200).send({ message: 'Book updated successfully' });
+    } catch (error) {
         console.log(error.message);
-        res.status(500).send({message: error.message});
+        res.status(500).send({ message: error.message });
     }
 });
 
-router.delete('/:id', async (req,res) => {
-    try{
+router.delete('/:id', async (req, res) => {
+    try {
         const { id } = req.params;
 
         const result = await Book.findByIdAndDelete(id);
 
-        if(!result) {
-            return res.status(400).json({ message: 'Book not found'});
+        if (!result) {
+            return res.status(400).json({ message: 'Book not found' });
         }
 
         return res.status(200).send({ message: 'Book deleted successfully' });
-
     } catch (error) {
         console.log(error.message);
-        res.status(500).send({message: error.message});
+        res.status(500).send({ message: error.message });
     }
 });
 

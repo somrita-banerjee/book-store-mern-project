@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
 import { Link } from 'react-router-dom';
@@ -7,10 +7,8 @@ import { backendUrl } from '../config';
 import BooksTable from '../components/home/BooksTable';
 import BooksCard from '../components/home/BooksCard';
 
-
 const Home = () => {
-
-    const [books, setBooks] = useState([]);  
+    const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showType, setShowType] = useState('table');
 
@@ -21,7 +19,7 @@ const Home = () => {
             .then((res) => {
                 setBooks(res.data.data);
                 setLoading(false);
-            }) 
+            })
             .catch((error) => {
                 console.log(error);
                 setLoading(false);
@@ -29,31 +27,38 @@ const Home = () => {
     }, []);
 
     const toggleShowType = () => {
-        if(showType === 'table') {
-            setShowType('card')
+        if (showType === 'table') {
+            setShowType('card');
         } else {
-            setShowType('table')
+            setShowType('table');
         }
-    }
+    };
 
     return (
-        <div className='p-4'>
-            <div className='flex justify between items-center gap-x-4 '>
-                <button className='bg-sky-300 hover:bg-sky-600 px-4 rounded-lg' onClick={() => toggleShowType()}>{showType}</button>
+        <div className="p-4">
+            <div className="flex justify between items-center gap-x-4 ">
+                <button
+                    className="bg-sky-300 hover:bg-sky-600 px-4 rounded-lg"
+                    onClick={() => toggleShowType()}
+                >
+                    {showType}
+                </button>
             </div>
-            <div className='flex justify-betwen items-center'>
-                <h1 className='text-5xl  my-8'>Book List</h1>
-                <Link to='/books/create'>
-                    <MdOutlineAddBox className='text-3xl text-green-500' />
+            <div className="flex justify-betwen items-center">
+                <h1 className="text-5xl  my-8">Book List</h1>
+                <Link to="/books/create">
+                    <MdOutlineAddBox className="text-3xl text-green-500" />
                 </Link>
             </div>
             {loading ? (
-                <Spinner />) : showType === 'table' ? (<BooksTable books={books} />
+                <Spinner />
+            ) : showType === 'table' ? (
+                <BooksTable books={books} />
             ) : (
-            <BooksCard books={books} />)
-            }
+                <BooksCard books={books} />
+            )}
         </div>
     );
 };
 
-export default Home
+export default Home;
