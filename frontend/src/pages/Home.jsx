@@ -28,16 +28,21 @@ const Home = () => {
             });
     }, []);
 
+    const toggleShowType = () => {
+        if(showType === 'table') {
+            setShowType('card')
+        } else {
+            setShowType('table')
+        }
+    }
+
     return (
         <div className='p-4'>
             <div className='flex justify between items-center gap-x-4 '>
-                <button className='bg-sky-300 hover:bg-sky-600 px-4 rounded-lg' onClick={() => setShowType('table')}>Table</button>
-            </div>
-            <div className='flex justify between items-center gap-x-4 '>
-                <button className='bg-sky-300 hover:bg-sky-600 px-4 rounded-lg' onClick={() => setShowType('card')}>Card</button>
+                <button className='bg-sky-300 hover:bg-sky-600 px-4 rounded-lg' onClick={() => toggleShowType()}>{showType}</button>
             </div>
             <div className='flex justify-betwen items-center'>
-                <h1 className='text-3xl my-8'>Book List</h1>
+                <h1 className='text-5xl  my-8'>Book List</h1>
                 <Link to='/books/create'>
                     <MdOutlineAddBox className='text-3xl text-green-500' />
                 </Link>

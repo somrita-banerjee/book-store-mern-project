@@ -15,10 +15,10 @@ const BookSingleCard = ({ book }) => {
     <div 
                 className="border-2 border-gray-500 rounded-xl px-4 py-2 m-4 relative hover:shadow-xl">
                     <h2 className="absolute top-2 right-2 bg-gray-500 text-white px-2 py-1 rounded-lg"> {book.publishYear} </h2>
-                    <h3 className="text-xl font-bold"> {book._id} </h3>
+                    <h3 className="text-xl font-bold"> {book.title} </h3>
                     <div className="flex justify-between items-center">
                         <PiBookOpenTextLight className="text-2xl text-gray-500" />
-                        <h4 className="text-lg text-gray-500"> {book.title} </h4>
+                        <h4 className="text-lg text-gray-500"> {book._id} </h4>
                     </div>
                     <div className="flex justify-start items-center gap-x-2">
                         <BiUserCircle className="text-2xl text-gray-500" />
